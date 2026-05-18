@@ -1,0 +1,60 @@
+/* =============================================
+   SpendSmart - Design Tokens
+   Author: [Your Name]
+   ============================================= */
+
+:root {
+  /* Brand Colors */
+  --clr-primary: #00c896;
+  --clr-primary-dark: #00a87d;
+  --clr-primary-light: rgba(0, 200, 150, 0.12);
+  --clr-accent: #ff6b6b;
+  --clr-warning: #ffb347;
+  --clr-info: #4e9af1;
+
+  /* Backgrounds */
+  --clr-bg: #0f1117;
+  --clr-bg-card: #1a1d27;
+  --clr-bg-hover: #21263a;
+  --clr-border: rgba(255, 255, 255, 0.07);
+
+  /* Text */
+  --clr-text: #e8eaf0;
+  --clr-text-muted: #7a8099;
+  --clr-text-dim: #4a5068;
+
+  /* Sidebar */
+  --sidebar-w: 240px;
+  --sidebar-bg: #13151f;
+
+  /* Shadows */
+  --shadow-card: 0 4px 24px rgba(0, 0, 0, 0.35);
+  --shadow-glow: 0 0 32px rgba(0, 200, 150, 0.18);
+
+  /* Radii */
+  --radius-sm: 8px;
+  --radius-md: 14px;
+  --radius-lg: 20px;
+
+  /* Typography */
+  --font-heading: 'Syne', sans-serif;
+  --font-body: 'DM Sans', sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+
+  /* Transitions */
+  --transition: 0.2s ease;
+  --transition-slow: 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+[data-theme="light"] {
+  --clr-bg: #f0f4f8;
+  --clr-bg-card: #ffffff;
+  --clr-bg-hover: #e8edf5;
+  --clr-border: rgba(0, 0, 0, 0.08);
+  --clr-text: #1a1d27;
+  --clr-text-muted: #5a6275;
+  --clr-text-dim: #9aa0b5;
+  --sidebar-bg: #ffffff;
+  --shadow-card: 0 4px 24px rgba(0, 0, 0, 0.08);
+  --shadow-glow: 0 0 32px rgba(0, 200, 150, 0.10);
+}
