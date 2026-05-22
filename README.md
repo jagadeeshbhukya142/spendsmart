@@ -18,8 +18,10 @@ A personal finance web app to track expenses, set budgets and understand where y
 ## Progress
 
 - [x] Day 1 — Project setup, folder structure, login page
+- [x] Day 2 — Dashboard layout, summary cards, recent transactions,
+              budget strip, add transaction modal
 
 ---
 
 ## Author
-[Jagadeesh Bhukya] — learning full stack development
+Jagadeesh Bhukya — learning full stack development

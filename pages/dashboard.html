@@ -62,9 +62,9 @@
 
     <div class="sidebar-bottom">
       <div class="user-profile">
-        <div class="user-avatar">AS</div>
+        <div class="user-avatar">JB</div>
         <div class="user-info">
-          <div class="user-name">Arjun Sharma</div>
+          <div class="user-name">Jagadeesh Bhukya</div>
           <div class="user-plan">Free Plan</div>
         </div>
       </div>
@@ -79,11 +79,11 @@
       <div class="topbar-left">
         <button class="topbar-btn" id="menuToggle" style="display:none;">☰</button>
         <div class="page-title">Dashboard</div>
-        <div class="page-subtitle">Welcome back, Arjun 👋  — May 2025</div>
+        <div class="page-subtitle">Welcome back, Jagadeesh 👋  — May 2025</div>
       </div>
       <div class="topbar-right">
         <button class="topbar-btn" id="themeToggle" onclick="toggleTheme()" title="Toggle theme">☀️</button>
-        <button class="btn btn-primary" onclick="document.getElementById('addTxModal').classList.add('show')">
+        <button class="btn btn-primary" onclick="openAddTxModal()">
           + Add Transaction
         </button>
       </div>
@@ -91,10 +91,52 @@
 
     <!-- Page Content — filled on Day 2 -->
     <main class="page-content">
-      <p style="color:var(--clr-text-muted); font-size:0.9rem;">
-        Dashboard content coming on Day 2 — summary cards, charts, and recent transactions.
-      </p>
-    </main>
+
+  <!-- 4 summary cards -->
+  <div class="summary-grid" id="summaryGrid">
+  </div>
+
+  <!-- chart on left, recent transactions on right -->
+  <div class="dashboard-bottom">
+
+    <div class="chart-card">
+      <div class="chart-card-header">
+        <div>
+          <div class="chart-title">Monthly Overview</div>
+          <div class="chart-subtitle">Income vs Expenses — last 7 months</div>
+        </div>
+        <div class="chart-tabs">
+          <div class="chart-tab active" data-range="7m">7M</div>
+          <div class="chart-tab" data-range="3m">3M</div>
+          <div class="chart-tab" data-range="1m">1M</div>
+        </div>
+      </div>
+      <!-- real chart comes on day 3 -->
+      <div class="chart-wrap" id="chartWrap"></div>
+    </div>
+
+    <div class="recent-card">
+      <div class="recent-card-header">
+        <div class="recent-title">Recent Transactions</div>
+        <a href="transactions.html" class="view-all-link">View all →</a>
+      </div>
+      <div class="txn-list" id="recentTxnList">
+      </div>
+    </div>
+
+  </div>
+
+  <!-- budget progress bars -->
+  <div class="budget-strip">
+    <div class="budget-strip-header">
+      <div class="budget-strip-title">Budget Overview</div>
+      <a href="budget.html" class="view-all-link">Manage budgets →</a>
+    </div>
+    <div class="budget-items" id="budgetItems">
+    </div>
+  </div>
+
+</main>
 
   </div>
 </div>
@@ -104,5 +146,65 @@
 <script src="../assets/js/components/toast.js"></script>
 <script src="../assets/js/components/navbar.js"></script>
 <script src="../assets/js/data/mockData.js"></script>
+<script src="../assets/js/dashboard.js"></script>
+<!-- add transaction modal -->
+<div class="modal-overlay" id="addTxModal">
+  <div class="modal">
+
+    <div class="modal-header">
+      <div class="modal-title">Add Transaction</div>
+      <div class="modal-close" id="modalClose">✕</div>
+    </div>
+
+    <div class="type-toggle">
+      <div class="type-btn active-expense" data-type="expense">💸 Expense</div>
+      <div class="type-btn" data-type="income">💵 Income</div>
+    </div>
+
+    <form class="modal-form" id="txForm" novalidate>
+
+      <div>
+        <label class="modal-label" for="txTitle">Transaction Name</label>
+        <input class="modal-input" type="text" id="txTitle"
+               placeholder="e.g. Swiggy Order" />
+      </div>
+
+      <div class="form-row">
+        <div>
+          <label class="modal-label" for="txAmount">Amount (₹)</label>
+          <input class="modal-input" type="number" id="txAmount"
+                 placeholder="0.00" min="1" />
+        </div>
+        <div>
+          <label class="modal-label" for="txDate">Date</label>
+          <input class="modal-input" type="date" id="txDate" />
+        </div>
+      </div>
+
+      <div>
+        <label class="modal-label" for="txCategory">Category</label>
+        <select class="modal-input" id="txCategory">
+          <option value="">Select category</option>
+          <option value="Food">🍔 Food</option>
+          <option value="Transport">🚗 Transport</option>
+          <option value="Shopping">🛍️ Shopping</option>
+          <option value="Rent">🏠 Rent</option>
+          <option value="Health">💊 Health</option>
+          <option value="Entertainment">🎬 Entertainment</option>
+          <option value="Utilities">💡 Utilities</option>
+          <option value="Savings">🏦 Savings</option>
+        </select>
+      </div>
+
+      <label class="recurring-check">
+        <input type="checkbox" id="txRecurring" />
+        <span>Mark as recurring transaction</span>
+      </label>
+
+      <button type="submit" class="modal-submit">Add Transaction</button>
+
+    </form>
+  </div>
+</div>
 </body>
 </html>

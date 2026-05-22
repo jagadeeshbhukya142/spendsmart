@@ -2,9 +2,9 @@
 // When backend is done, this file gets removed and replaced with API calls
 
 const MOCK_USER = {
-  name: 'Arjun Sharma',
-  email: 'arjun@example.com',
-  initials: 'AS',
+  name: 'Jagadeesh Bhukya',
+  email: 'Jagadeesh@example.com',
+  initials: 'JB',
   joinedDate: '2024-01-01',
 };
 
