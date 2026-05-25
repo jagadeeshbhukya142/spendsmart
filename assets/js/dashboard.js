@@ -1,16 +1,15 @@
-// dashboard.js
-// day 2 work -- rendering the summary cards and recent transactions
-// chart will be added tomorrow (day 3) once i understand Chart.js better
-
 document.addEventListener('DOMContentLoaded', () => {
 
     renderSummaryCards();
     renderRecentTransactions();
     renderBudgetStrip();
     setupModal();
+    setGreeting();
 
-    // placeholder for chart -- coming day 3
-    renderChartPlaceholder();
+    // day 3 -- real charts
+    renderBarChart();
+    renderPieChart();
+    setupChartTabs();
 });
 
 
@@ -183,32 +182,213 @@ function renderBudgetStrip() {
 }
 
 
-// ---- CHART PLACEHOLDER ----
-// real Chart.js bar chart coming on Day 3
-// for now just showing a message so the layout doesn't look empty
+// ---- BAR CHART ----
+// took me a while to understand the datasets structure
+// income and expense are two separate datasets on same chart
 
-function renderChartPlaceholder() {
-    const wrap = document.getElementById('chartWrap');
-    if (!wrap) return;
+let barChartInstance = null;
 
-    wrap.innerHTML = `
-        <div style="
-            height: 100%;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            color: var(--clr-text-dim);
-            gap: 10px;
-            border: 2px dashed var(--clr-border);
-            border-radius: var(--radius-sm);
-        ">
-            <span style="font-size:2rem;">📊</span>
-            <span style="font-size:0.82rem;">Bar chart coming on Day 3 (Chart.js)</span>
-        </div>
-    `;
+function renderBarChart() {
+    const canvas = document.getElementById('barChart');
+    if (!canvas) return;
+
+    // get labels and data from mockData
+    const labels  = MOCK_MONTHLY.map(m => m.month);
+    const incomes  = MOCK_MONTHLY.map(m => m.income);
+    const expenses = MOCK_MONTHLY.map(m => m.expense);
+
+    // destroy old chart before making new one
+    // without this it throws an error on re-render
+    if (barChartInstance) barChartInstance.destroy();
+
+    barChartInstance = new Chart(canvas, {
+        type: 'bar',
+        data: {
+            labels: labels,
+            datasets: [
+                {
+                    label: 'Income',
+                    data: incomes,
+                    backgroundColor: 'rgba(0, 200, 150, 0.75)',
+                    borderColor: 'rgba(0, 200, 150, 1)',
+                    borderWidth: 1.5,
+                    borderRadius: 6,
+                    borderSkipped: false,
+                },
+                {
+                    label: 'Expenses',
+                    data: expenses,
+                    backgroundColor: 'rgba(255, 107, 107, 0.75)',
+                    borderColor: 'rgba(255, 107, 107, 1)',
+                    borderWidth: 1.5,
+                    borderRadius: 6,
+                    borderSkipped: false,
+                }
+            ]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: {
+                    position: 'top',
+                    labels: {
+                        color: getComputedStyle(document.documentElement)
+                               .getPropertyValue('--clr-text').trim() || '#e8eaf0',
+                        font: { size: 12, family: 'DM Sans' },
+                        boxWidth: 12,
+                        padding: 16,
+                    }
+                },
+                tooltip: {
+                    callbacks: {
+                        label: (ctx) => ' ₹' + ctx.raw.toLocaleString('en-IN')
+                    }
+                }
+            },
+            scales: {
+                x: {
+                    grid: { color: 'rgba(255,255,255,0.05)' },
+                    ticks: {
+                        color: getComputedStyle(document.documentElement)
+                               .getPropertyValue('--clr-text-muted').trim() || '#7a8099'
+                    }
+                },
+                y: {
+                    grid: { color: 'rgba(255,255,255,0.05)' },
+                    ticks: {
+                        color: getComputedStyle(document.documentElement)
+                               .getPropertyValue('--clr-text-muted').trim() || '#7a8099',
+                        callback: (val) => '₹' + (val/1000) + 'k'
+                    }
+                }
+            }
+        }
+    });
 }
 
+
+// ---- PIE CHART ----
+// this shows spending breakdown by category
+// i had to manually calculate totals per category from the transactions
+
+let pieChartInstance = null;
+
+function renderPieChart() {
+    const canvas = document.getElementById('pieChart');
+    if (!canvas) return;
+
+    // group expenses by category
+    // i didnt know you could use an object like this to group data
+    // much cleaner than what i was trying before with if-else
+    const categoryTotals = {};
+    MOCK_TRANSACTIONS.forEach(t => {
+        if (t.type === 'expense') {
+            const cat = t.category;
+            const amt = Math.abs(t.amount);
+            categoryTotals[cat] = (categoryTotals[cat] || 0) + amt;
+        }
+    });
+
+    const labels  = Object.keys(categoryTotals);
+    const data    = Object.values(categoryTotals);
+    const total   = data.reduce((a, b) => a + b, 0);
+
+    // colours for each slice
+    const colors = [
+        '#00c896', '#ff6b6b', '#4e9af1',
+        '#ffb347', '#a78bfa', '#34d399',
+        '#f472b6', '#60a5fa'
+    ];
+
+    if (pieChartInstance) pieChartInstance.destroy();
+
+    pieChartInstance = new Chart(canvas, {
+        type: 'doughnut',
+        data: {
+            labels: labels,
+            datasets: [{
+                data: data,
+                backgroundColor: colors.slice(0, labels.length),
+                borderColor: 'transparent',
+                borderWidth: 0,
+                hoverOffset: 8,
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            cutout: '68%',
+            plugins: {
+                legend: { display: false },
+                tooltip: {
+                    callbacks: {
+                        label: (ctx) => {
+                            const pct = Math.round((ctx.raw / total) * 100);
+                            return ` ₹${ctx.raw.toLocaleString('en-IN')} (${pct}%)`;
+                        }
+                    }
+                }
+            }
+        }
+    });
+
+    // render custom legend separately
+    renderPieLegend(labels, data, colors, total);
+}
+
+
+// custom legend -- chart.js built-in legend didnt look good
+// so i made my own with the percentage badges
+
+function renderPieLegend(labels, data, colors, total) {
+    const container = document.getElementById('pieLegend');
+    if (!container) return;
+
+    container.innerHTML = labels.map((label, i) => {
+        const pct = Math.round((data[i] / total) * 100);
+        return `
+            <div class="legend-item">
+                <div class="legend-dot" style="background:${colors[i]}"></div>
+                <span class="legend-name">${label}</span>
+                <span class="legend-amount">${formatCurrency(data[i])}</span>
+                <span class="legend-pct">${pct}%</span>
+            </div>
+        `;
+    }).join('');
+}
+
+
+// ---- CHART TAB SWITCHING ----
+// when user clicks 3M or 1M, filter the data and re-render
+
+function setupChartTabs() {
+    const tabs = document.querySelectorAll('.chart-tab');
+    tabs.forEach(tab => {
+        tab.addEventListener('click', () => {
+            tabs.forEach(t => t.classList.remove('active'));
+            tab.classList.add('active');
+
+            const range = tab.dataset.range;
+            let months = 7;
+            if (range === '3m') months = 3;
+            if (range === '1m') months = 1;
+
+            // slice data based on selected range
+            const sliced = MOCK_MONTHLY.slice(-months);
+            updateBarChart(sliced);
+        });
+    });
+}
+
+function updateBarChart(data) {
+    if (!barChartInstance) return;
+
+    barChartInstance.data.labels   = data.map(m => m.month);
+    barChartInstance.data.datasets[0].data = data.map(m => m.income);
+    barChartInstance.data.datasets[1].data = data.map(m => m.expense);
+    barChartInstance.update();
+}
 
 // ---- MODAL ----
 // add transaction modal logic

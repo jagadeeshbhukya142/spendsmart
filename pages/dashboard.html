@@ -89,7 +89,7 @@
       </div>
     </header>
 
-    <!-- Page Content — filled on Day 2 -->
+ 
     <main class="page-content">
 
   <!-- 4 summary cards -->
@@ -111,9 +111,11 @@
           <div class="chart-tab" data-range="1m">1M</div>
         </div>
       </div>
-      <!-- real chart comes on day 3 -->
-      <div class="chart-wrap" id="chartWrap"></div>
-    </div>
+      
+        <div class="chart-wrap">
+         <canvas id="barChart"></canvas>
+        </div>
+  </div>
 
     <div class="recent-card">
       <div class="recent-card-header">
@@ -125,6 +127,29 @@
     </div>
 
   </div>
+  <!-- pie chart row -->
+<div class="pie-row">
+
+  <div class="pie-card">
+    <div class="pie-card-header">
+      <div>
+        <div class="chart-title">Spending by Category</div>
+        <div class="chart-subtitle">Where your money went this month</div>
+      </div>
+    </div>
+    <div class="pie-wrap">
+      <canvas id="pieChart"></canvas>
+    </div>
+  </div>
+
+  <div class="pie-summary-card">
+    <div class="chart-title" style="margin-bottom:16px;">Category Breakdown</div>
+    <div id="pieLegend" class="pie-legend">
+      
+    </div>
+  </div>
+
+</div>
 
   <!-- budget progress bars -->
   <div class="budget-strip">
@@ -142,6 +167,7 @@
 </div>
 
 <!-- Scripts -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script src="../assets/js/theme.js"></script>
 <script src="../assets/js/components/toast.js"></script>
 <script src="../assets/js/components/navbar.js"></script>
