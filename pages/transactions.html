@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SpendSmart — Transactions</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+
+  <link rel="stylesheet" href="../assets/css/variables.css" />
+  <link rel="stylesheet" href="../assets/css/reset.css" />
+  <link rel="stylesheet" href="../assets/css/main.css" />
+  <link rel="stylesheet" href="../assets/css/transactions.css" />
+</head>
+<body>
+
+<div class="sidebar-overlay"></div>
+
+<div class="app-shell">
+
+  <!-- ======= SIDEBAR ======= -->
+  <aside class="sidebar">
+    <div class="sidebar-logo">
+      <div class="logo-icon">💰</div>
+      <span class="logo-text">Spend<span>Smart</span></span>
+    </div>
+
+    <nav class="sidebar-nav">
+      <span class="nav-section-label">Main</span>
+
+      <a href="dashboard.html" class="nav-link">
+        <span class="nav-icon">📊</span>
+        Dashboard
+      </a>
+      <a href="transactions.html" class="nav-link active">
+        <span class="nav-icon">💳</span>
+        Transactions
+        <span class="nav-badge" id="txnCount">15</span>
+      </a>
+      <a href="budget.html" class="nav-link">
+        <span class="nav-icon">🎯</span>
+        Budget
+      </a>
+      <a href="reports.html" class="nav-link">
+        <span class="nav-icon">📈</span>
+        Reports
+      </a>
+
+      <span class="nav-section-label" style="margin-top:14px;">Account</span>
+
+      <a href="#" class="nav-link">
+        <span class="nav-icon">⚙️</span>
+        Settings
+      </a>
+      <a href="../index.html" class="nav-link">
+        <span class="nav-icon">🚪</span>
+        Logout
+      </a>
+    </nav>
+
+    <div class="sidebar-bottom">
+      <div class="user-profile">
+        <div class="user-avatar">JB</div>
+        <div class="user-info">
+          <div class="user-name">Jagadeesh Bhukya</div>
+          <div class="user-plan">Free Plan</div>
+        </div>
+      </div>
+    </div>
+  </aside>
+
+  <!-- ======= MAIN ======= -->
+  <div class="main-content">
+
+    <header class="topbar">
+      <div class="topbar-left">
+        <button class="topbar-btn" id="menuToggle"
+                style="display:none; margin-right:10px;">☰</button>
+        <div>
+          <div class="page-title">Transactions</div>
+          <div class="page-subtitle">All your income and expenses in one place</div>
+        </div>
+      </div>
+      <div class="topbar-right">
+        <button class="topbar-btn" id="themeToggle"
+                onclick="toggleTheme()" title="Toggle theme">☀️</button>
+        <button class="btn btn-outline" id="exportBtn">
+          ⬇ Export CSV
+        </button>
+        <button class="btn btn-primary" onclick="openAddTxModal()">
+          + Add Transaction
+        </button>
+      </div>
+    </header>
+
+    <main class="page-content">
+
+      <!-- summary strip at top -->
+      <div class="txn-summary-strip" id="txnSummaryStrip">
+        <!-- filled by transactions.js -->
+      </div>
+
+      <!-- search and filter bar -->
+      <div class="filter-bar">
+
+        <div class="search-wrap">
+          <span class="search-icon">🔍</span>
+          <input
+            type="text"
+            id="searchInput"
+            class="search-input"
+            placeholder="Search transactions..."
+          />
+          <span class="search-clear" id="searchClear">✕</span>
+        </div>
+
+        <div class="filters">
+          <select class="filter-select" id="categoryFilter">
+            <option value="">All Categories</option>
+            <option value="Food">🍔 Food</option>
+            <option value="Transport">🚗 Transport</option>
+            <option value="Shopping">🛍️ Shopping</option>
+            <option value="Rent">🏠 Rent</option>
+            <option value="Health">💊 Health</option>
+            <option value="Entertainment">🎬 Entertainment</option>
+            <option value="Utilities">💡 Utilities</option>
+            <option value="Savings">🏦 Savings</option>
+          </select>
+
+          <select class="filter-select" id="typeFilter">
+            <option value="">All Types</option>
+            <option value="expense">Expense only</option>
+            <option value="income">Income only</option>
+          </select>
+
+          <select class="filter-select" id="sortFilter">
+            <option value="date-desc">Newest first</option>
+            <option value="date-asc">Oldest first</option>
+            <option value="amount-desc">Highest amount</option>
+            <option value="amount-asc">Lowest amount</option>
+          </select>
+
+          <button class="btn btn-outline" id="clearFilters">
+            Clear filters
+          </button>
+        </div>
+
+      </div>
+
+      <!-- results count -->
+      <div class="results-info" id="resultsInfo">
+        Showing all 15 transactions
+      </div>
+
+      <!-- transactions table -->
+      <div class="txn-table-wrap">
+        <table class="txn-table">
+          <thead>
+            <tr>
+              <th>Transaction</th>
+              <th>Category</th>
+              <th>Date</th>
+              <th>Type</th>
+              <th style="text-align:right;">Amount</th>
+            </tr>
+          </thead>
+          <tbody id="txnTableBody">
+            <!-- filled by transactions.js -->
+          </tbody>
+        </table>
+
+        <!-- empty state when no results -->
+        <div class="empty-state" id="emptyState" style="display:none;">
+          <div class="empty-icon">🔍</div>
+          <div class="empty-title">No transactions found</div>
+          <div class="empty-desc">Try changing your search or filters</div>
+        </div>
+
+      </div>
+
+    </main>
+  </div>
+</div>
+
+
+<!-- add transaction modal — same as dashboard -->
+<div class="modal-overlay" id="addTxModal">
+  <div class="modal">
+    <div class="modal-header">
+      <div class="modal-title">Add Transaction</div>
+      <div class="modal-close" id="modalClose">✕</div>
+    </div>
+
+    <div class="type-toggle">
+      <div class="type-btn active-expense" data-type="expense">💸 Expense</div>
+      <div class="type-btn" data-type="income">💵 Income</div>
+    </div>
+
+    <form class="modal-form" id="txForm" novalidate>
+      <div>
+        <label class="modal-label" for="txTitle">Transaction Name</label>
+        <input class="modal-input" type="text" id="txTitle"
+               placeholder="e.g. Swiggy Order" />
+      </div>
+      <div class="form-row">
+        <div>
+          <label class="modal-label" for="txAmount">Amount (₹)</label>
+          <input class="modal-input" type="number" id="txAmount"
+                 placeholder="0.00" min="1" />
+        </div>
+        <div>
+          <label class="modal-label" for="txDate">Date</label>
+          <input class="modal-input" type="date" id="txDate" />
+        </div>
+      </div>
+      <div>
+        <label class="modal-label" for="txCategory">Category</label>
+        <select class="modal-input" id="txCategory">
+          <option value="">Select category</option>
+          <option value="Food">🍔 Food</option>
+          <option value="Transport">🚗 Transport</option>
+          <option value="Shopping">🛍️ Shopping</option>
+          <option value="Rent">🏠 Rent</option>
+          <option value="Health">💊 Health</option>
+          <option value="Entertainment">🎬 Entertainment</option>
+          <option value="Utilities">💡 Utilities</option>
+          <option value="Savings">🏦 Savings</option>
+        </select>
+      </div>
+      <label class="recurring-check">
+        <input type="checkbox" id="txRecurring" />
+        <span>Mark as recurring transaction</span>
+      </label>
+      <button type="submit" class="modal-submit">Add Transaction</button>
+    </form>
+  </div>
+</div>
+
+
+<script src="../assets/js/theme.js"></script>
+<script src="../assets/js/components/toast.js"></script>
+<script src="../assets/js/components/navbar.js"></script>
+<script src="../assets/js/data/mockData.js"></script>
+<script src="../assets/js/transactions.js"></script>
+
+</body>
+</html>
