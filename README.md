@@ -22,6 +22,8 @@ A personal finance web app to track expenses, set budgets and understand where y
               budget strip, add transaction modal
 - [x] Day 3 — Bar chart (income vs expenses), pie chart
               (spending by category), chart tab switching
+- [x] Day 4 — Transactions page, search, category filter,
+              type filter, sort, CSV export
 
 ---
 
