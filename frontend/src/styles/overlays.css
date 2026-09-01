@@ -1,0 +1,217 @@
+.modal-overlay,
+.confirm-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  display: grid;
+  place-items: center;
+  padding: var(--space-4);
+  background: rgba(15, 15, 25, 0.45);
+  overflow-y: auto;
+}
+
+.modal,
+.confirm-dialog {
+  width: min(100%, 420px);
+  margin: auto;
+  max-height: calc(100dvh - 32px);
+  overflow-y: auto;
+  background: var(--color-surface);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-overlay);
+  padding: var(--space-6);
+}
+
+.modal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: var(--space-5);
+}
+
+.modal-title {
+  font-size: 1.0625rem;
+  font-weight: 700;
+}
+
+.modal-close {
+  display: grid;
+  place-items: center;
+  width: 30px;
+  height: 30px;
+  border-radius: var(--radius-sm);
+  color: var(--color-text-muted);
+}
+
+.modal-close:hover {
+  background: var(--color-surface-hover);
+}
+
+.type-toggle {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-2);
+  margin-bottom: var(--space-4);
+}
+
+.type-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  height: 38px;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  color: var(--color-text-muted);
+  font-weight: 600;
+  font-size: 0.8125rem;
+}
+
+.type-btn.active-expense {
+  border-color: var(--color-expense);
+  background: var(--color-expense-subtle);
+  color: var(--color-expense);
+}
+
+.type-btn.active-income {
+  border-color: var(--color-income);
+  background: var(--color-income-subtle);
+  color: var(--color-income);
+}
+
+.modal-form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+.form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-3);
+}
+
+.modal-label {
+  display: block;
+  margin-bottom: var(--space-2);
+  font-size: 0.8125rem;
+  font-weight: 600;
+}
+
+.modal-input {
+  width: 100%;
+  height: 40px;
+  padding: 0 var(--space-3);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  background: var(--color-surface);
+}
+
+.modal-input:focus {
+  border-color: var(--color-brand);
+  box-shadow: 0 0 0 3px var(--color-focus-ring);
+}
+
+.modal-input[aria-invalid='true'] {
+  border-color: var(--color-expense);
+}
+
+.modal-textarea {
+  min-height: 72px;
+  padding-top: var(--space-2);
+  resize: vertical;
+}
+
+.modal-submit {
+  height: 42px;
+  border-radius: var(--radius-sm);
+  background: var(--color-brand);
+  color: #fff;
+  font-weight: 600;
+}
+
+.modal-submit:hover:not(:disabled) {
+  background: var(--color-brand-hover);
+}
+
+/* Confirm dialog */
+
+.confirm-dialog h2 {
+  margin-bottom: var(--space-2);
+  font-size: 1.0625rem;
+}
+
+.confirm-dialog p {
+  margin-bottom: var(--space-5);
+  color: var(--color-text-muted);
+  font-size: 0.875rem;
+}
+
+.confirm-dialog > div:last-child {
+  display: flex;
+  justify-content: flex-end;
+  gap: var(--space-2);
+}
+
+/* Toast */
+
+#toast-container {
+  position: fixed;
+  right: var(--space-4);
+  bottom: var(--space-4);
+  z-index: 200;
+  max-width: min(380px, calc(100vw - 32px));
+}
+
+.toast {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  padding: var(--space-3) var(--space-4);
+  border-radius: var(--radius-md);
+  background: var(--color-surface);
+  border-left: 3px solid var(--color-info);
+  box-shadow: var(--shadow-overlay);
+}
+
+.toast-success {
+  border-left-color: var(--color-income);
+}
+
+.toast-success .toast-icon {
+  color: var(--color-income);
+}
+
+.toast-error {
+  border-left-color: var(--color-expense);
+}
+
+.toast-error .toast-icon {
+  color: var(--color-expense);
+}
+
+.toast-warning {
+  border-left-color: var(--color-warning);
+}
+
+.toast-warning .toast-icon {
+  color: var(--color-warning);
+}
+
+.toast-message {
+  flex: 1;
+  font-size: 0.8125rem;
+}
+
+.toast button {
+  display: grid;
+  place-items: center;
+  width: 26px;
+  height: 26px;
+  color: var(--color-text-muted);
+  flex-shrink: 0;
+}
+
+.toast button:hover {
+  color: var(--color-text);
+}

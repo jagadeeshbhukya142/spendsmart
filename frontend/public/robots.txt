@@ -1,0 +1,5 @@
+# Authenticated personal finance app - nothing here should be search-indexed,
+# including the login page itself. This matches the <meta name="robots"> tag
+# in index.html rather than contradicting it.
+User-agent: *
+Disallow: /

@@ -1,0 +1,120 @@
+/*
+ * Design tokens.
+ *
+ * Light theme is the default and is what the app is actually designed
+ * around; dark just swaps the surface/text tokens. Keep the two palettes
+ * in sync when adding a new token - most components should only ever
+ * reference the semantic names below, never a raw color.
+ */
+
+:root {
+  color-scheme: light;
+
+  --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --font-mono: 'Roboto Mono', 'SFMono-Regular', Consolas, monospace;
+
+  /* Surfaces */
+  --color-canvas: #f6f6f9;
+  --color-surface: #ffffff;
+  --color-surface-muted: #f5f4fb;
+  --color-surface-hover: #f0eef9;
+  --color-sidebar: #ffffff;
+
+  /* Borders */
+  --color-border: #ececf2;
+  --color-border-strong: #dcdae6;
+
+  /* Text */
+  --color-text: #16151f;
+  --color-text-muted: #6f6d81;
+  --color-text-subtle: #9997a8;
+  --color-text-on-brand: #ffffff;
+
+  /* Brand */
+  --color-brand: #6c5ce7;
+  --color-brand-hover: #5b4bd6;
+  --color-brand-subtle: #efecfd;
+  --color-focus-ring: rgba(108, 92, 231, 0.35);
+
+  /* Status */
+  --color-income: #16a34a;
+  --color-income-subtle: #eafaf0;
+  --color-expense: #e0483e;
+  --color-expense-subtle: #fdecea;
+  --color-warning: #d3860a;
+  --color-warning-subtle: #fbf1de;
+  --color-info: #2e6fdb;
+  --color-info-subtle: #eaf1fd;
+
+  /* Category series, used for the donut chart + legends */
+  --color-cat-1: #6c5ce7;
+  --color-cat-2: #2e6fdb;
+  --color-cat-3: #d3860a;
+  --color-cat-4: #e0483e;
+  --color-cat-5: #16a34a;
+  --color-cat-6: #9997a8;
+
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 20px;
+  --space-6: 24px;
+  --space-7: 28px;
+  --space-8: 32px;
+  --space-10: 40px;
+  --space-12: 48px;
+
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+  --radius-pill: 999px;
+
+  --shadow-card: 0 1px 2px rgba(20, 20, 43, 0.04), 0 1px 8px rgba(20, 20, 43, 0.04);
+  --shadow-overlay: 0 20px 48px rgba(20, 20, 43, 0.18);
+
+  --sidebar-width: 248px;
+  --topbar-height: 72px;
+  --transition: 160ms ease;
+}
+
+[data-theme='dark'] {
+  color-scheme: dark;
+
+  --color-canvas: #121218;
+  --color-surface: #191a22;
+  --color-surface-muted: #1f2029;
+  --color-surface-hover: #24252f;
+  --color-sidebar: #15161d;
+
+  --color-border: #2a2b36;
+  --color-border-strong: #3a3b48;
+
+  --color-text: #f1f1f6;
+  --color-text-muted: #a4a3b3;
+  --color-text-subtle: #75748a;
+
+  --color-brand: #8b7cf5;
+  --color-brand-hover: #9c8ff7;
+  --color-brand-subtle: rgba(139, 124, 245, 0.16);
+  --color-focus-ring: rgba(139, 124, 245, 0.4);
+
+  --color-income: #34c471;
+  --color-income-subtle: rgba(52, 196, 113, 0.14);
+  --color-expense: #f0685f;
+  --color-expense-subtle: rgba(240, 104, 95, 0.14);
+  --color-warning: #e3a13f;
+  --color-warning-subtle: rgba(227, 161, 63, 0.14);
+  --color-info: #5f92e6;
+  --color-info-subtle: rgba(95, 146, 230, 0.14);
+
+  --color-cat-1: #8b7cf5;
+  --color-cat-2: #5f92e6;
+  --color-cat-3: #e3a13f;
+  --color-cat-4: #f0685f;
+  --color-cat-5: #34c471;
+  --color-cat-6: #75748a;
+
+  --shadow-card: 0 1px 2px rgba(0, 0, 0, 0.24), 0 1px 8px rgba(0, 0, 0, 0.24);
+  --shadow-overlay: 0 20px 48px rgba(0, 0, 0, 0.5);
+}

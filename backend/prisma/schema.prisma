@@ -1,0 +1,108 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id                    String                 @id @default(cuid())
+  name                  String
+  email                 String                 @unique
+  passwordHash          String
+  createdAt             DateTime               @default(now())
+  updatedAt             DateTime               @updatedAt
+  budgets               Budget[]
+  categories            Category[]
+  recurringTransactions RecurringTransaction[]
+  transactions          Transaction[]
+
+  @@index([createdAt])
+}
+
+model Category {
+  id                    String                 @id @default(cuid())
+  userId                String
+  name                  String
+  createdAt             DateTime               @default(now())
+  updatedAt             DateTime               @updatedAt
+  budgets               Budget[]
+  user                  User                   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  recurringTransactions RecurringTransaction[]
+  transactions          Transaction[]
+
+  @@unique([userId, name])
+  @@index([userId])
+}
+
+model Transaction {
+  id                     String                @id @default(cuid())
+  userId                 String
+  categoryId             String
+  amount                 Decimal               @db.Decimal(14, 2)
+  type                   TransactionType
+  description            String?
+  transactionDate        DateTime              @db.Date
+  createdAt              DateTime              @default(now())
+  updatedAt              DateTime              @updatedAt
+  recurringTransactionId String?
+  category               Category              @relation(fields: [categoryId], references: [id])
+  recurringTransaction   RecurringTransaction? @relation(fields: [recurringTransactionId], references: [id])
+  user                   User                  @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([recurringTransactionId, transactionDate])
+  @@index([userId, transactionDate])
+  @@index([userId, categoryId])
+  @@index([userId, type, transactionDate])
+}
+
+model Budget {
+  id         String   @id @default(cuid())
+  userId     String
+  categoryId String
+  amount     Decimal  @db.Decimal(14, 2)
+  month      Int
+  year       Int
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+  category   Category @relation(fields: [categoryId], references: [id])
+  user       User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, categoryId, month, year])
+  @@index([userId, year, month])
+  @@index([categoryId])
+}
+
+model RecurringTransaction {
+  id                    String              @id @default(cuid())
+  userId                String
+  categoryId            String
+  amount                Decimal             @db.Decimal(14, 2)
+  type                  TransactionType
+  description           String?
+  frequency             RecurrenceFrequency
+  startDate             DateTime            @db.Date
+  nextExecutionDate     DateTime            @db.Date
+  active                Boolean             @default(true)
+  createdAt             DateTime            @default(now())
+  updatedAt             DateTime            @updatedAt
+  category              Category            @relation(fields: [categoryId], references: [id])
+  user                  User                @relation(fields: [userId], references: [id], onDelete: Cascade)
+  generatedTransactions Transaction[]
+
+  @@index([userId, active, nextExecutionDate])
+  @@index([categoryId])
+}
+
+enum TransactionType {
+  INCOME
+  EXPENSE
+}
+
+enum RecurrenceFrequency {
+  WEEKLY
+  MONTHLY
+  YEARLY
+}

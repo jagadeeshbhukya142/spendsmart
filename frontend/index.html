@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>SpendSmart - Personal Finance Tracker</title>
+    <meta name="description" content="Track income and expenses, plan category budgets, and review your spending trends in one focused personal finance workspace." />
+    <link rel="canonical" href="https://spendsmart.jagadeeshbhukya.dev/login" />
+
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="apple-touch-icon" href="/favicon.svg" />
+    <meta name="theme-color" content="#6c5ce7" />
+    <meta name="robots" content="noindex, nofollow" />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="SpendSmart" />
+    <meta property="og:title" content="SpendSmart - Personal Finance Tracker" />
+    <meta property="og:description" content="Track income and expenses, plan category budgets, and review your spending trends in one focused workspace." />
+    <meta property="og:image" content="/og-image.png" />
+    <meta name="twitter:card" content="summary_large_image" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+
+    <script>
+      // Applied before React mounts so returning visitors don't see a flash
+      // of the wrong theme while the bundle loads.
+      (function () {
+        var saved = localStorage.getItem('spendsmart-theme');
+        document.documentElement.dataset.theme = saved === 'dark' ? 'dark' : 'light';
+      })();
+    </script>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.jsx"></script>
+  </body>
+</html>
